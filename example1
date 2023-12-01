@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov 30 16:09:03 2023
+
+@author: 0&1
+"""
+
+import pandas as pd
+df = pd.read_csv('https://www.kaggle.com/c/titanic/data/train.csv')
+print(df.head())
+
+print(df.describe())
+
+print(df.isnull().sum())
+
+df2 = df.copy()
+df2 = df2.dropna()
+df2.info()
+
+import seaborn as sns
+sns.countplot(x='Survived',data=df)
+
+print(df['Survived'].value_counts())
+
+sns.boxplot(data=df,x='Pclass', y='Age')
+sns.barplot(data=df,x='Pclass',y='Fare')
+
+
+df_cabin = df[['Cabin','Fare']]
+df_cabin = df_cabin.dropna()
+print(df_cabin['Cabin'].nunique())
+
+def clean_cabin(cabin):
+    return(cabin[0])
+    df_cabin = df_cabin['Cabin'].apply(clean_cabin)
+
+print(df_cabin['Cabin'].nunique())
+
+sns.catplot(data=df_cabin,x='Cabin',y='Fare')
+
+sns.barplot(data=df,x='Survived',y='Fare')
+
+sns.barplot(data=df,x='Pclass',y='Survived')
