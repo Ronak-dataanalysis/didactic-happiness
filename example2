@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 29 11:31:10 2023
+
+@author: 0&1
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+import plotly.express as px
+import plotly.graph_objects as go
+
+#import plotly
+#plotly.tools.set_credentials_file(username=’ronifa’, api_key=’••••••••••’)
+data = pd.read_csv(r"https://www.kaggle.com/datasets/arashnic/fitbit/dailyActivity_merged.csv")
+print(data.head())
+
+print(data.isnull().sum())
+
+print(data.info())
+
+data["ActivityDate"] = pd.to_datetime(data["ActivityDate"], 
+                                      format="%m/%d/%Y")
+print(data.info())
+
+data["TotalMinutes"] = data["VeryActiveMinutes"] + data["FairlyActiveMinutes"] + data["LightlyActiveMinutes"] + data["SedentaryMinutes"]
+print(data["TotalMinutes"].sample(5))
+
+print(data.describe())
+
+figure=px.scatter(data_frame = data, x="Calories",
+                    y="TotalSteps", size="VeryActiveMinutes", 
+                    trendline="ols", 
+                    title="Relationship between Calories & Total Steps")
+figure.show()
+
+
+
+
+
